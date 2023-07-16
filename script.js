@@ -5,6 +5,7 @@ const acButton = document.querySelector('#ac');
 const equalButton = document.querySelector('#equals');
 const dotButton = document.querySelector('#dot');
 const signButton = document.querySelector('#sign');
+const porcButton = document.querySelector('#porc');
 
 let result = 0,
     operation = 0,
@@ -24,6 +25,13 @@ function clearEvent() {
 function check (e) {
     return displayNumber.toString().split('').indexOf(e)
 };
+function checkOp (e, operation) {
+    return operation.toString().split('').indexOf(e)
+};
+function returnOnlyNum (num) {
+    let regex = /[0-9]/g;
+    operation = num.match(regex).join('');
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     numbers.forEach(number => {
@@ -69,5 +77,29 @@ document.addEventListener('DOMContentLoaded', function() {
             displayNumber = Number(newNumber.join(''));
         })();
         display.innerHTML = displayNumber;
+    })
+    porcButton.addEventListener('click', function() {
+        switch(true){
+            case checkOp('+', operation) > -1:
+                returnOnlyNum(operation);
+                display.innerHTML = operation*(1+displayNumber/100);
+                clear();
+                break;
+            case checkOp('-', operation) > -1:
+                returnOnlyNum(operation);
+                display.innerHTML = operation*(1-displayNumber/100);
+                clear();
+                break;
+            case checkOp('/', operation) > -1:
+                returnOnlyNum(operation);
+                display.innerHTML = operation/(displayNumber/100);
+                clear();
+                break;
+            case checkOp('*', operation) > -1:
+                returnOnlyNum(operation);
+                display.innerHTML = operation/(displayNumber/100);
+                clear();
+                break;
+        }
     })
 })
